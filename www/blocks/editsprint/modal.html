@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h3 class="modal-title">Create new sprint</h3>
+</div>
+<form role="form" name="newSprintForm" novalidate>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{ 'has-error': newSprintForm.status.$invalid }">
+            <label for="status">Select status</label>
+            <select name="status"
+                    class="form-control"
+                    ng-model="form.status"
+                    id="status"
+                    ng-options="option.id as option.name for option in options" required>
+            </select>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': newSprintForm.duration.$invalid }">
+            <input type="number"
+                   name="duration"
+                   class="form-control"
+                   ng-model="form.duration"
+                   id="duration"
+                   placeholder="Estimate sprint duration" required/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-class="{ 'disabled': newSprintForm.$invalid }" ng-click="save(form)">Save</button>
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

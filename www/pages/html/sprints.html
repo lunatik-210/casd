@@ -1,0 +1,26 @@
+<div class="b-sprints container">
+    <div ng-repeat="project in projects">
+        <br>
+        <hr>
+        <h2 class="text-left clickable" ng-click = "state.go('project.tasks', {id:project.id});">Project: {{project.name}}</h2>
+        <h5 class="text-left">Maximum points per sprint: {{project.max_points_per_sprint}}</h5>
+        <h5 class="text-left">Status: {{project.status}}</h5>
+        <table ng-if="sprints.length > 1" class="table ui-table-hover text-center">
+            <thead>
+            <tr>
+                <th class="clickable text-center" ng-click="orderType='id'; order=!order">#id</th>
+                <th class="clickable text-center" ng-click="orderType='status'; order=!order">Status</th>
+                <th class="clickable text-center" ng-click="orderType='duration'; order=!order">Duration</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="sprint in sprints | orderBy:orderType | reverse: order" ng-if="sprint.id != 0 && sprint.project_id == project.id " ng-style="get_sprint_style(sprint)">
+                <td ng-click="go(project.id, sprint.id)">{{sprint.id}}</td>
+                <td ng-click="go(project.id, sprint.id)">{{sprint.status}}</td>
+                <td ng-click="go(project.id, sprint.id)">{{sprint.duration}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

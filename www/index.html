@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>Casd</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <meta name="Title" content="Casd">
+        <meta name="Keywords" content="">
+        <meta name="Description" content="">
+        <meta charset="UTF-8">
+
+        <base href="/">
+
+        <!-- css -->
+        <link rel="stylesheet" type="text/css" href="/libs/css/animate.css">
+        <link rel="stylesheet" type="text/css" href="/libs/css/angucomplete.css">
+        <link rel="stylesheet" type="text/css" href="/libs/css/jquery-ui.min.css">
+        <link rel="stylesheet" type="text/css" href="/libs/css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/libs/css/bootstrap/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="/pages/css/index.css">
+
+        <script data-main="/pages/js/main" src="/libs/js/require.js"></script>
+
+        <style type="text/css">
+
+        </style>
+    </head>
+    <body ng-controller="CasdCtr">
+        <ui-navbar></ui-navbar>
+        <div class="container">
+            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+        </div>
+        <div class="ui-view-container">
+            <div ui-view></div>
+        </div>
+    </body>
+</html>
+

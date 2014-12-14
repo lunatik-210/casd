@@ -1,0 +1,44 @@
+<!--<form class="form-inline">
+
+    <button type="button" class="btn btn-default inline" ng-click="add_user()">Add user</button>
+</form> -->
+<form class="form-group" name="addUserForm" novalidate>
+    <div class="form-inline">
+        <angucomplete class="form-group"
+                      id="ex1"
+                      placeholder="Adding users"
+                      pause="100"
+                      selectedobject="selectedUsers"
+                      localdata="data"
+                      searchfields="email"
+                      titlefield="email"
+                      minlength="1"
+                      inputclass="form-control form-control-small"></angucomplete>
+
+        <button type="button"
+                class="form-group btn btn-default inline"
+                ng-click="add_collaborator()">Add user</button>
+    </div>
+</form>
+
+<br>
+
+<table ng-if="collaborators.length != 0" class="table ui-table-hover text-center">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="clickable text-center" ng-click="orderType='user_name'; order=!order">User name</th>
+            <th class="clickable text-center" ng-click="orderType='email'; order=!order">E-mail</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="user in collaborators | orderBy:orderType | reverse: order" style="background: rgba(220, 220, 220, 0.5); color: #000000">
+        <td>
+            <img class="inline clickable" ng-click="remove_collaborator(user)" src="/pages/images/remove.png" style="width: 20px; height: 20px"/>
+        </td>
+        <td ng-click="">{{user.user_name}}</td>
+        <td ng-click="">{{user.email}}</td>
+    </tr>
+    </tbody>
+</table>

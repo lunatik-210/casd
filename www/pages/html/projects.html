@@ -1,0 +1,28 @@
+<div class="b-projects container" ng-init="order=true">
+    <button type="button" class="btn btn-default" ng-controller="CreateProjectCtr" ng-click="createProject()">Create project</button>
+    <table ng-if="projects.length != 0" class="table ui-table-hover text-center">
+        <thead>
+            <tr>
+                <th></th>
+                <th class="clickable text-center" ng-click="orderType='name'; order=!order">Project name</th>
+                <th class="clickable text-center" ng-click="orderType='description'; order=!order">Description</th>
+                <th class="clickable text-center" ng-click="orderType='status'; order=!order">Status</th>
+                <th class="clickable text-center" ng-click="orderType='max_points_per_sprint'; order=!order">Max points/per sprints</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="project in projects | orderBy:orderType | reverse: order"
+                ng-style="get_project_style(project)">
+                <td>
+                    <img class="inline" ng-click="remove(project)" src="/pages/images/remove.png" style="width: 20px; height: 20px"/>
+                    <img class="inline" ng-controller="EditProjectCtr" ng-click="editProject(project)" src="/pages/images/edit.png" style="width: 20px; height: 20px"/>
+                </td>
+                <td ng-click="go(project)">{{project.name}}</td>
+                <td ng-click="go(project)">{{project.description}}</td>
+                <td ng-click="go(project)">{{project.status}}</td>
+                <td ng-click="go(project)">{{project.max_points_per_sprint}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

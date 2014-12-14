@@ -1,0 +1,21 @@
+.b-tasks td { cursor: default; }
+
+$animation-in-name: zoomIn;
+$animation-duration: 250ms;
+
+$animation-out-name: zoomOut;
+$animation-duration: 250ms;
+
+.task-detail.ng-enter {
+  -webkit-animation: $animation-in-name $animation-duration;
+  -moz-animation: $animation-in-name $animation-duration;
+  -o-animation: $animation-in-name $animation-duration;
+  animation: $animation-in-name $animation-duration;
+}
+
+.task-detail.ng-leave {
+  -webkit-animation: $animation-out-name $animation-duration;
+  -moz-animation: $animation-out-name $animation-duration;
+  -o-animation: $animation-out-name $animation-duration;
+  animation: $animation-out-name $animation-duration;
+}

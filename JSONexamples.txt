@@ -1,0 +1,488 @@
+JSON examples
+(Note: The JSONs that ask for an user_id will be updated to take it from the session, 
+    except in the case of some uptades, 
+    where we need to check if the user logged is the owner of the object to update.)
+
+GET:
+/api/users 
+
+[
+    {
+        "id":"1",
+        "user_name":"name",
+        "is_active":"1",
+        "email":"mail"
+    },
+    {
+        "id":"2",
+        "user_name":"name1",
+        "is_active":"1",
+        "email":"mail"
+    },
+    {
+        "id":"3",
+        "user_name":"name2",
+        "is_active":"0",
+        "email":"mail"
+    }
+]
+
+/api/users/{user_id}
+
+{
+    "id":"1",
+    "user_name":"name",
+    "is_active":"1",
+    "email":"mail",
+    "password":"pass"
+}
+
+/api/projects
+
+[
+    {
+        "id":"1",
+        "name":"project1",
+        "status":"Active",
+        "description":"project1 descr",
+        "max_points_per_sprint":"12",
+        "number_of_sprints":"3",
+		"user_id":"1"
+    },
+    {
+        "id":"2",
+        "name":"project2",
+        "status":"Active",
+        "description":"project2 descr",
+        "max_points_per_sprint":"15",
+        "number_of_sprints":"1",
+		"user_id":"2"
+    },
+    {
+        "id":"3",
+        "name":"project3",
+        "status":"Active",
+        "description":"project3 descr",
+        "max_points_per_sprint":"16",
+        "number_of_sprints":"1",
+		"user_id":"3"
+    }
+]
+
+/api/projects/{project_id}
+
+{
+    "id":"1",
+    "name":"project1",
+    "status":"Active",
+    "description":"project1 descr",
+    "max_points_per_sprint":"12",
+	"number_of_sprints":"1",
+	"user_id":"1"
+}
+
+/api/projects/{project_id}/collaborators
+
+[
+    {
+        "id":"2",
+        "user_name":"name1",
+        "is_active":"1",
+        "email":"mail",
+        "password":"pass"
+    },
+    {
+        "id":"3",
+        "user_name":"name2",
+        "is_active":"0",
+        "email":"mail",
+        "password":"pass"
+    }
+]
+
+/api/projects/{project_id}/sprints
+
+[
+    {
+        "id":"0",
+        "status":"Backlog",
+        "duration":"0",
+        "project_id":"1"
+    },
+    {
+        "id":"1",
+        "status":"Started",
+        "duration":"2",
+        "project_id":"1"
+    }
+]
+
+/api/projects/{project_id}/tasks
+
+[
+    {
+        "id":"1",
+        "priority":"Low",
+        "position":"Backlog",
+        "type":"Feature",
+        "description":"descr",
+        "title":"task1",
+        "points":"5",
+        "super_task_id":"1",
+        "sprint_id":"1",
+        "project_id":"1",
+        "user_id":"1"
+    }
+]
+
+/api/sprints
+
+[
+    {
+        "id":"0",
+        "status":"Backlog",
+        "duration":"0",
+        "project_id":"1"
+    },
+    {
+        "id":"0",
+        "status":"Backlog",
+        "duration":"0",
+        "project_id":"2"
+    },
+    {
+        "id":"0",
+        "status":"Backlog",
+        "duration":"0",
+        "project_id":"3"
+    },
+    {
+        "id":"1",
+        "status":"Started",
+        "duration":"2",
+        "project_id":"1"
+    },
+    {
+        "id":"1",
+        "status":"Started",
+        "duration":"1",
+        "project_id":"2"
+    },
+    {
+        "id":"1",
+        "status":"Started",
+        "duration":"1",
+        "project_id":"3"
+    }
+]
+
+/api/projects/{project_id}/sprints/{sprint_id}
+
+{
+    "id":"1",
+    "status":"Started",
+    "duration":"2",
+    "project_id":"1"
+}
+
+
+/api/topics
+
+[
+    {
+        "id":"1",
+        "title":"topic1",
+        "description":"topic1 descr",
+        "answered":"0",
+        "user_id":"1",
+        "project_id":"1",
+        "task_id":"1",
+        "sprint_id":"1"
+    },
+    {
+        "id":"2",
+        "title":"topic2",
+        "description":"topic2 descr",
+        "answered":"0",
+        "user_id":"2",
+        "project_id":"2",
+        "task_id":"2",
+        "sprint_id":"1"
+    },
+    {
+        "id":"3",
+        "title":"topic3",
+        "description":"topic3 descr",
+        "answered":"1",
+        "user_id":"3",
+        "project_id":"3",
+        "task_id":"3",
+        "sprint_id":"1"
+    }
+]
+
+/api/topics/{topic_id}
+
+{
+    "id":"1",
+    "title":"topic1",
+    "description":"topic1 descr",
+    "answered":"0",
+    "user_id":"1",
+    "project_id":"1",
+    "task_id":"1",
+    "sprint_id":"1"
+}
+
+/api/topics/{topic_id}/answers
+
+[
+    {
+        "id":"1",
+        "description":"answer1",
+        "topic_id":"3",
+        "user_id":"3"
+    }
+]
+
+/api/tasks
+
+[
+    {
+        "id":"1",
+        "priority":"Low",
+        "position":"Backlog",
+        "type":"Feature",
+        "description":"descr",
+        "title":"task1",
+        "points":"5",
+        "super_task_id":"1",
+        "sprint_id":"1",
+        "project_id":"1",
+        "user_id":"1"
+    },
+    {
+        "id":"2",
+        "priority":"Normal",
+        "position":"Process",
+        "type":"Bug",
+        "description":"descr",
+        "title":"subtask1",
+        "points":"5",
+        "super_task_id":"2",
+        "sprint_id":"1",
+        "project_id":"2",
+        "user_id":"2"
+    },
+    {
+        "id":"3",
+        "priority":"High",
+        "position":"Done",
+        "type":"Bug",
+        "description":"descr",
+        "title":"task2",
+        "points":"10",
+        "super_task_id":"3",
+        "sprint_id":"1",
+        "project_id":"3",
+        "user_id":"3"
+    }
+]
+
+/api/projects/{project_id}/tasks/{task_id}
+
+{
+    "id":"1",
+    "priority":"Low",
+    "position":"Backlog",
+    "type":"Feature",
+    "description":"descr",
+    "title":"task1",
+    "points":"5",
+    "super_task_id":"1",
+    "sprint_id":"1",
+    "project_id":"1",
+    "user_id":"1"
+}
+
+/api/tasks/{task_id}/subtasks
+
+[
+    {
+        "id":"2",
+        "priority":"Normal",
+        "position":"Process",
+        "type":"Bug",
+        "description":"descr",
+        "title":"subtask1",
+        "points":"5",
+        "super_task_id":"1",
+        "sprint_id":"1",
+        "project_id":"2",
+        "user_id":"2"
+    }
+]
+
+------------------------------------------------------------------------------------------------------
+
+POST
+
+/api/sessions
+
+{
+    "email":"mail@example.com",
+    "password":"passwordexample"
+}
+
+/api/users
+
+{
+    "user_name":"username",
+    "email":"mail@example.com",
+    "password":"passwordexample"
+}
+
+/api/users/{user_id}
+
+{
+    "user_name":"(new) username",
+    "email":"(new) mail@example.com",
+    "password":"(new) passwordexample"
+}
+
+/api/projects
+
+{
+    "name":"projectname",
+    "status":"Active",
+    "description":"projectdescr",
+    "mpps":"10",
+    "user_id":"1"
+}
+
+/api/projects/{project_id}
+
+{
+    "name":"projectname",
+    "status":"Active",
+    "description":"projectdescr",
+    "max_points_per_sprint":"15",
+}
+
+/api/projects/{project_id}
+
+{
+    "name":"projectname",
+    "status":"Active",
+    "description":"projectdescr",
+    "max_points_per_sprint":"15",
+}
+
+/api/projects/{project_id}/collaborators/{user_id}
+
+Doesn't ask any JSON, just adds the user (taken from the user_id) as a collaborator for the current project.
+
+/api/projects/{project_id}/tasks
+
+{
+    "title":"task title",
+    "description":"task descr",
+    "priority":"Low",
+    "position":"Backlog",
+    "points":"10",
+    "type":"Bug"
+}
+
+/api/projects/{project_id}/sprints/
+
+{
+    "status":"Backlog",
+    "duration":"3"
+}
+
+/api/projects/{project_id}/sprints/{sprint_id}
+
+{
+    "status":"Started",
+    "duration":"3"
+}
+
+/api/topics
+
+{
+    "title":"topic title",
+    "description":"topic descr",
+    "project_id":"1",
+    "task_id":"1",
+    "sprint_id":"1",
+}
+
+/api/topics/{topic_id}
+
+{
+    "title":"topic title",
+    "description":"topic descr",
+    "answered":"0",
+    "project_id":"1",
+    "task_id":"1",
+    "sprint_id":"1",
+    "user_id":"1",
+}
+
+/api/topics/{topic_id}/answers
+
+{
+    "description":"answer descr"
+}
+
+/api/topics/{topic_id}/answers/{answer_id}
+
+{
+    "description":"answer descr"
+}
+
+/api/topics/{topic_id}/answers/{answer_id} (here the user_id is to check if the user logged is owner of the answer we want to update)
+
+{
+    "description":"answer descr",
+    "user_id":"1"
+}
+
+/api/projects/{project_id}/tasks/{task_id}
+
+{
+    "title":"task title",
+    "description":"task descr",
+    "priority":"Low",
+    "position":"Backlog",
+    "sprint_id":"1",
+    "points":"10",
+    "type":"Bug"
+}
+
+/api/tasks/{task_id}/subtasks
+
+{
+    "title":"subtask title",
+    "description":"subtask descr",
+    "priority":"Low",
+    "position":"Backlog",
+    "sprint_id":"1",
+    "project_id":"1",
+    "points":"10",
+    "type":"Bug"
+}
+
+/api/tasks/{task_id}/subtasks/{subtask_id}
+
+{
+    "title":"subtask title",
+    "description":"subtask descr",
+    "priority":"Low",
+    "position":"Done",
+    "project_id":"1",    
+    "points":"10",
+    "type":"Bug"
+}
+
+

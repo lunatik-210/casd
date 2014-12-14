@@ -1,0 +1,70 @@
+@import "global.scss";
+@import "projects.scss";
+@import "project.scss";
+@import "sprints.scss";
+@import "tasks.scss";
+@import "../../blocks/navbar/navbar.scss";
+
+.ui-view-container {
+  position: relative;
+}
+
+[ui-view].ng-enter, [ui-view].ng-leave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  -webkit-transition:all .5s ease-in-out;
+  -moz-transition:all .5s ease-in-out;
+  -o-transition:all .5s ease-in-out;
+  transition:all .5s ease-in-out;
+}
+
+[ui-view].ng-enter {
+  opacity: 0;
+  -webkit-transform:scale3d(0.5, 0.5, 0.5);
+  -moz-transform:scale3d(0.5, 0.5, 0.5);
+  transform:scale3d(0.5, 0.5, 0.5);
+}
+
+[ui-view].ng-enter-active {
+  opacity: 1;
+  -webkit-transform: scale3d(1, 1, 1);
+  -moz-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+}
+
+[ui-view].ng-leave {
+  opacity: 1;
+  /*padding-left: 0px;*/
+  -webkit-transform:translate3d(0, 0, 0);
+  -moz-transform:translate3d(0, 0, 0);
+  transform:translate3d(0, 0, 0);
+}
+
+[ui-view].ng-leave-active {
+  opacity: 0;
+  /*padding-left: 100px;*/
+  -webkit-transform:translate3d(100px, 0, 0);
+  -moz-transform:translate3d(100px, 0, 0);
+  transform:translate3d(100px, 0, 0);
+}
+
+$animation-in-name: rubberBand;
+$animation-duration: 500ms;
+
+$animation-out-name: bounceOutRight;
+$animation-duration: 500ms;
+
+.alert.ng-enter {
+  -webkit-animation: $animation-in-name $animation-duration;
+  -moz-animation: $animation-in-name $animation-duration;
+  -o-animation: $animation-in-name $animation-duration;
+  animation: $animation-in-name $animation-duration;
+}
+
+.alert.ng-leave {
+  -webkit-animation: $animation-out-name $animation-duration;
+  -moz-animation: $animation-out-name $animation-duration;
+  -o-animation: $animation-out-name $animation-duration;
+  animation: $animation-out-name $animation-duration;
+}

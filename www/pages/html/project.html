@@ -1,0 +1,18 @@
+<div class="b-project container">
+    <h1 class="text-left">Project: {{project.name}}</h1>
+    <h5 class="text-left">Maximum points per sprint: {{project.max_points_per_sprint}}</h5>
+    <h5 class="text-left">Status: {{project.status}}</h5>
+    <br>
+    <div>
+        <ul class="nav nav-tabs">
+            <li role="presentation" ng-class="{ 'active': state.$current.name == 'project.tasks' }"><a ui-sref=".tasks">Tasks</a></li>
+            <li role="presentation" ng-class="{ 'active': state.$current.name == 'project.sprints' }"><a ui-sref=".sprints">Sprints</a></li>
+            <li role="presentation" ng-class="{ 'active': state.$current.name == 'project.users' }"><a ui-sref=".users">Users</a></li>
+            <li role="presentation" ng-class="{ 'active': state.$current.name == 'project.report' }"><a ui-sref=".report">Report</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="ui-view-container">
+        <div ui-view></div>
+    </div>
+</div>

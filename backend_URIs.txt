@@ -1,0 +1,76 @@
+URIs
+====
+
+main page
+=========
+
+/
+
+manage projects
+===============
+
+api/projects (POST request to add one, GET to see them all)
+
+api/projects/{project_id} (GET request to see it, DELETE to remove it, POST to update it)
+
+api/projects/{project_id}/collaborators (GET request to see the all the users associated)
+
+api/projects/{project_id}/collaborators/{user_id} (DELETE request to remove the user from the project,POST to add one)
+
+api/projects/{project_id}/topics (GET request to see all the topics associated)
+
+user login and management
+=========================
+
+api/sessions (for login)
+
+api/users/ (POST request to add one, GET to see them all)
+
+api/users/{user_id}/ (GET request to see it, DELETE to remove it, POST to update it)
+
+sprint management
+=================
+
+api/sprints	(GET to see all the existent sprints)
+
+api/projects/{project_id}/sprints (GET request to see the sprints associated,POST to add one)
+
+api/projects/{project_id}/sprints/{sprint_id} (GET request to see the sprint,POST to update it, DELETE to remove it)
+
+task management
+===============
+
+api/projects/{project_id}/tasks (GET request to see the tasks associated,POST to add one)
+
+api/projects/{project_id}/tasks/{task_id} (GET request to see the task,POST to update, DELETE to remove it)
+
+api/projects/{project_id}/sprints/{sprint_id}/tasks (GET request to see the tasks associated, POST to add one)	
+
+api/tasks/{task_id}/subtasks (GET to see them all, POST to add one)
+
+api/tasks/{task_id}/subtasks/{subtask_id} {POST to update it, DELETE to remove it}
+
+topics managements
+==================
+
+api/topics/ (POST request to add one, GET to see them all)
+
+api/topics/{topic_id} (GET request to see it, DELETE to remove it, POST to update it)
+
+api/topics/{topic_id}/answers (GET request to see all the answers associated, POST to add one)
+
+api/topics/{topic_id}/answers/{answer_id} (POST to update it, DELETE to remove it)
+
+report generation
+=================
+
+api/reports
+
+api/reports/generate
+
+issue tracking
+==============
+
+api/issues
+
+api/issues/{issue_id}

@@ -1,0 +1,145 @@
+-- Drop tables if they exist
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Topics;
+DROP TABLE IF EXISTS Projects;
+DROP TABLE IF EXISTS Colaborators;
+DROP TABLE IF EXISTS Tasks;
+DROP TABLE IF EXISTS Sprints;
+DROP TABLE IF EXISTS Answers;
+
+-- Make sure that foreign_key support is turned on
+PRAGMA foreign_keys = ON;
+
+-- Create a table for users where a user has an id (primary key)
+CREATE TABLE Users (
+  id INTEGER PRIMARY KEY,
+  user_name TEXT,
+  is_active BOOLEAN,
+  email TEXT UNIQUE,
+  password TEXT
+);
+
+
+-- Create a table for projects where a project has an id (primary key)
+CREATE TABLE Projects (
+  id INTEGER PRIMARY KEY,
+  name TEXT,
+  status TEXT,
+  description TEXT,
+  max_points_per_sprint INTEGER,
+  number_of_sprints INTEGER,
+  user_id INTEGER,
+  FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+-- Trigger to put the correct sprint id
+CREATE TRIGGER add_backlog AFTER INSERT ON Projects
+  BEGIN
+    INSERT INTO Sprints(id,status,duration,project_id) VALUES (-1,'Backlog',0,new.id);
+  END;
+
+-- Create a table for topics where a topic has an id (primary key)
+CREATE TABLE Topics (
+  id INTEGER PRIMARY KEY,
+  title TEXT,
+  description TEXT,
+  answered BOOLEAN,
+  user_id INTEGER,
+  project_id INTEGER,
+  task_id INTEGER,
+  sprint_id INTEGER,
+  FOREIGN KEY (sprint_id,project_id) REFERENCES Sprints(id,project_id) ON DELETE CASCADE,
+  FOREIGN KEY (task_id) REFERENCES Tasks(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES Users(id),
+  FOREIGN KEY (project_id) REFERENCES Projects(id) ON DELETE CASCADE
+);
+
+
+-- Create a table for the todos where each todo references the primary key of a user
+CREATE TABLE Collaborators (
+  user_id INTEGER,
+  project_id INTEGER,
+  PRIMARY KEY (user_id,project_id),
+  FOREIGN KEY (user_id) REFERENCES Users(id),
+  FOREIGN KEY (project_id) REFERENCES Projects(id) ON DELETE CASCADE
+);
+
+
+-- Create a table for tasks where a tasks has an id (primary key)
+CREATE TABLE Tasks (
+  id INTEGER PRIMARY KEY,
+  priority TEXT,
+  position TEXT,
+  type TEXT,
+  description TEXT,
+  title TEXT,
+  points INTEGER,
+  super_task_id INTEGER,
+  sprint_id INTEGER,
+  project_id INTEGER,
+  user_id INTEGER,
+  FOREIGN KEY (sprint_id,project_id) REFERENCES Sprints(id,project_id) ON DELETE CASCADE,
+  FOREIGN KEY (super_task_id) REFERENCES Tasks(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+
+-- Create a table for sprints where a topic has an id (primary key)
+CREATE TABLE Sprints (
+  id INTEGER,
+  status TEXT,
+  duration INTEGER,
+  project_id INTEGER,
+  PRIMARY KEY (id,project_id),
+  FOREIGN KEY (project_id) REFERENCES Projects(id) ON DELETE CASCADE
+);
+
+-- Trigger to increment the number of sprints in the correct project
+CREATE TRIGGER inc_number_of_sprints BEFORE INSERT ON Sprints
+  BEGIN
+    UPDATE Projects SET number_of_sprints = number_of_sprints+1 WHERE id=new.project_id; 
+  END;
+
+-- Trigger to put the correct sprint id
+CREATE TRIGGER correct_sprint_id AFTER INSERT ON Sprints
+  BEGIN
+    UPDATE Sprints SET id = (SELECT p.number_of_sprints FROM Projects p WHERE p.id = new.project_id) WHERE id=-1;
+  END;
+
+
+-- Create a table for answers where a topic has an id (primary key)
+CREATE TABLE Answers (
+  id INTEGER PRIMARY KEY,
+  description TEXT,
+  topic_id INTEGER,
+  user_id INTEGER,
+  FOREIGN KEY (topic_id) REFERENCES Topics(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+
+-- Add some users to the users table
+INSERT INTO Users(user_name,is_active,email,password) VALUES ('name',1,'name1@mail.com','$2a$04$AmZSLRJRZAv5.LYR0YfsYuJfIg2LyTe8E2PaKbQyUpZOTMCeXEXnK');
+INSERT INTO Users(user_name,is_active,email,password) VALUES ('name1',1,'name2@mail.com','$2a$04$py7lS7hLvBhC1Q7LtR4Hg.LKuejj7QIjWnstxoLkIsL7kO2Cxox16');
+INSERT INTO Users(user_name,is_active,email,password) VALUES ('name2',0,'name3@mail.com','$2a$04$Cp5cmvyI2sLLV3vxvN61Pu0m4qh3tDQ7XwbxT7ikJ1Nn1jz0FbfuS');
+
+INSERT INTO Projects(name,status,description,max_points_per_sprint,number_of_sprints,user_id) VALUES ('project1','Active','project1 descr',10,-1,1);
+INSERT INTO Projects(name,status,description,max_points_per_sprint,number_of_sprints,user_id) VALUES ('project2','Active','project2 descr',15,-1,2);
+INSERT INTO Projects(name,status,description,max_points_per_sprint,number_of_sprints,user_id) VALUES ('project3','Active','project3 descr',16,-1,3);
+
+INSERT INTO Collaborators(user_id,project_id) VALUES (2,1);
+INSERT INTO Collaborators(user_id,project_id) VALUES (3,1);
+
+INSERT INTO Sprints(id,status,duration,project_id) VALUES (-1,'Started',2,1);
+INSERT INTO Sprints(id,status,duration,project_id) VALUES (-1,'Started',1,2);
+INSERT INTO Sprints(id,status,duration,project_id) VALUES (-1,'Started',1,3);
+
+INSERT INTO Tasks(priority,position,type,description,title,points,super_task_id,sprint_id,project_id,user_id) VALUES ('Low','Backlog','Feature','descr','task1',5,1,1,1,1);
+INSERT INTO Tasks(priority,position,type,description,title,points,super_task_id,sprint_id,project_id,user_id) VALUES ('Normal','Process','Bug','descr','subtask1',5,1,1,2,2);
+INSERT INTO Tasks(priority,position,type,description,title,points,super_task_id,sprint_id,project_id,user_id) VALUES ('High','Done','Bug','descr','task2',10,3,1,3,3);
+
+INSERT INTO Topics(title,description,answered,user_id,project_id,task_id,sprint_id) VALUES ('topic1','topic1 descr',0,1,1,1,1);
+INSERT INTO Topics(title,description,answered,user_id,project_id,task_id,sprint_id) VALUES ('topic2','topic2 descr',0,2,1,2,1);
+INSERT INTO Topics(title,description,answered,user_id,project_id,task_id,sprint_id) VALUES ('topic3','topic3 descr',1,3,3,3,1);
+
+INSERT INTO Answers(description,topic_id,user_id) VALUES ('answer1',3,3);

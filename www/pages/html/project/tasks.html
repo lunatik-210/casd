@@ -1,0 +1,61 @@
+<button type="button" class="btn btn-default" ng-controller="CreateTaskCtr" ng-click="createTask()">Add task</button>
+
+<table ng-if="tasks.length != 0" class="table ui-table-hover text-center">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="clickable text-center" ng-click="orderType='id'; order=!order">#id</th>
+            <th class="clickable text-center" ng-click="orderType='title'; order=!order">Title</th>
+            <th class="clickable text-center" ng-click="orderType='points'; order=!order">Points</th>
+            <th class="clickable text-center" ng-click="orderType='type'; order=!order">Type</th>
+            <th class="clickable text-center" ng-click="orderType='position'; order=!order">Position</th>
+            <th class="clickable text-center" ng-click="orderType='priority'; order=!order">Priority</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat-start="task in tasks | orderBy: orderType | reverse: order" ng-style="get_task_style(task)">
+            <td>
+                <img class="clickable inline" ng-click="remove(task)" src="/pages/images/remove.png" style="width: 20px; height: 20px"/>
+                <img class="clickable inline" ng-controller="EditTaskCtr" ng-click="editTask(task)" src="/pages/images/edit.png" style="width: 20px; height: 20px"/>
+            </td>
+            <td ng-click="task.expanded=!task.expanded">{{task.id}}</td>
+            <td ng-click="task.expanded=!task.expanded">{{task.title}}</td>
+            <td ng-click="task.expanded=!task.expanded">{{task.points}}</td>
+            <td ng-click="task.expanded=!task.expanded">{{task.type}}</td>
+            <td ng-click="task.expanded=!task.expanded">{{task.position}}</td>
+            <td ng-click="task.expanded=!task.expanded">{{task.priority}}</td>
+        </tr>
+        <tr class="task-detail" ng-if="task.expanded" ng-repeat-end="">
+            <td align="left" colspan="7">
+                <div ng-if="task.description!=''">
+                    <h3>Description:</h3>
+                    <h4>{{task.description}}</h4>
+                </div>
+                <hr>
+                <button type="button" class="btn btn-default" ng-controller="CreateTaskCtr" ng-click="createTask(task.id)">Add sub-task</button>
+                <div ng-controller="SubTaskCtr" ng-init="init(task.id)">
+                    <div ng-if="sub_tasks.length!=0">
+                        <br>
+                        <h3>Depends on tasks:</h3>
+                        <div ng-repeat="sub_task in sub_tasks" ng-click="sub_task.mouseover =! sub_task.mouseover" >
+                            <h3> #id {{sub_task.id}} - {{sub_task.title}}</h3>
+                            <div ng-if="sub_task.mouseover">
+                                <h4>Points: {{sub_task.points}}</h4>
+                                <h4>Type: {{sub_task.type}}</h4>
+                                <h4>Position: {{sub_task.position}}</h4>
+                                <h4>Priority: {{sub_task.priority}}</h4>
+                                <div ng-if="sub_task.description!=''">
+                                    <h4>Description:</h4>
+                                    <h5>{{sub_task.description}}</h5>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </td>
+        </tr>
+    </tbody>
+</table>

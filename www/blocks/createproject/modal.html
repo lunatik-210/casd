@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h3 class="modal-title">Create new project</h3>
+</div>
+<form role="form" name="newProjectForm" novalidate>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{ 'has-error': newProjectForm.name.$invalid }">
+            <label for="name">Project name</label>
+            <input type="text"
+                   name="name"
+                   class="form-control"
+                   ng-model="form.project_name"
+                   id="name"
+                   placeholder="Enter project name" required>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': newProjectForm.description.$invalid }">
+            <label for="description">Project description</label>
+            <textarea type="text"
+                      name="description"
+                      class="form-control"
+                      ng-model="form.description"
+                      id="description"
+                      placeholder="Enter project description"
+                      rows="3"></textarea>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': newProjectForm.max_points_per_sprint.$invalid }">
+            <label for="max_points_per_sprint">Points per sprint</label>
+            <input type="number"
+                   name="max_points_per_sprint"
+                   class="form-control"
+                   ng-model="form.max_points_per_sprint"
+                   id="max_points_per_sprint"
+                   placeholder="Enter the maximum number of points for each sprint" required/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-class="{ 'disabled': newProjectForm.$invalid }" ng-click="save(form)">Save</button>
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    </div>
+</form>
